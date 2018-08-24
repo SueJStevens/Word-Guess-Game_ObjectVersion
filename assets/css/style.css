@@ -1,0 +1,52 @@
+
+
+/*Custom classes used for testing purposes*/
+.red-border {
+    border-style: solid;
+    border-color: red;
+}
+
+.blue-border {
+    border-style: solid;
+    border-color: blue;
+}
+
+.green-border {
+    border-style: solid;
+    border-color: green;
+}
+/*css shared across multiple html files, design elements not available in bootstrap*/
+body {
+    margin-bottom: 60px;
+}
+
+.container-top {
+    border-bottom: solid;
+    border-color: #1F2936;
+    background-color: white;
+}
+
+.container-bottom {
+    border-top: solid;
+    border-color: #1F2936;
+    background-color: white;
+}
+
+footer {
+    font-size: .75rem;
+    margin-top: 60px;
+}
+
+#jumbotron_tiedye {
+    border-bottom: solid;
+    border-color: #1F2936;
+    background: #fff url("../images/tiedyebackground0002.jpg") no-repeat center center fixed;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+}
+
+.yellow_tyedye {
+    color: rgb(255, 238, 0);
+}
