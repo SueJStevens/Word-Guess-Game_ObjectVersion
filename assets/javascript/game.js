@@ -14,6 +14,9 @@ var game = {
     remainingGuesses: 9,
     wins: 0,
     losses: 0,
+    arrEmoji: ['\u0028', '\u00D7', '\u005F', '\u00D7', '\u003B', '\u0029', '\u23A7' + '\xa0', '\u23A7' + '\xa0'+ '\xa0' + '\u23AB','\xa0' + '\u23A7' + 'RIP' + '\u23AB' + '\xa0'],
+    emoji: "",
+    emoji1: "",
 
     randomWord: function() {
         game.computerPick = game.words[Math.floor(Math.random() * Math.floor(game.words.length))];
@@ -89,8 +92,33 @@ var game = {
         game.remainingGuesses = game.initialGuesses - game.arrWrong.length;
     },
 
+    buildEmoji: function(int){
+        game.emoji = "";
+        game.emoji1 = "";
+
+        //clear variables & display
+        document.getElementById("emoji").textContent = game.emoji;
+        document.getElementById("emoji1").textContent = game.emoji1;
+
+        //run through the emoji array and build the emoji
+        var g = game.initialGuesses - int;
+        for (var i=0; i<g; i++){
+            if (i<=5) {
+                game.emoji = game.emoji + game.arrEmoji[i];
+            } else {                
+                game.emoji1 = game.arrEmoji[i];
+            }
+        }
+
+        //Update the display
+        document.getElementById("emoji").textContent = game.emoji;
+        document.getElementById("emoji1").textContent = game.emoji1;
+    },
+
     resetGame: function() {
         /*NOTE DON'T FORGET TO RESET THE DISPLAY TOO!!*/
+            document.getElementById("lastWord").textContent = game.computerPick;
+            document.getElementById("guessesLeft").textContent = game.initialGuesses;
 
         //reset variables
             game.guesses =  '';
@@ -98,13 +126,10 @@ var game = {
             game.wrongGuesses= '';
             game.arrWrong = []; //empty array
             game.remainingGuesses = game.initialGuesses;
+            document.getElementById("wrongGuesses").textContent = game.wrongGuesses;
             document.getElementById("wordBlanks").textContent = game.initialComputerPick;
             game.randomWord();                
     },
-
-    //changeDisplay: function(strElementID, displayValue) {
-      //  document.getElementById(strElementID).textContent = displayValue;
-   // }
 
 } //close object
 
@@ -126,20 +151,13 @@ document.onkeyup = function(event) {
             game.updateWordMask(game.computerPick, game.guesses);
             game.buildWrongGuesses(game.computerPick, game.guesses);
             game.calcRemainingGuesses();
-            //console.log('computerPick: '+ game.computerPick);
-            //console.log('guesses: '+ game.guesses); //all guesses, right and wrong
-            //console.log('wordBlank: '+ game.wordBlank);  //word mask showing right guesses
-            //console.log('wrongGuesses: '+ game.wrongGuesses); //string of wrong guesses in alph order separated by a comma
-            //console.log('remainingGuesses: '+ game.remainingGuesses); //Calc of remaining guesses
-
-//            game.changeDisplay("computerPick", game.computerPick);
-//            game.changeDisplay("wordBlank", game.wordBlank);
-//            game.changeDisplay("wrongGuesses", game.wrongGuesses);
-//            game.changeDisplay("guessesLeft", game.remainingGuesses);
+            game.buildEmoji(game.remainingGuesses);
 
             document.getElementById("computerPick").textContent = game.computerPick;
             document.getElementById("wordBlanks").textContent = game.wordBlank;
             document.getElementById("wrongGuesses").textContent = game.wrongGuesses;
+            document.getElementById("emoji").textContent = game.emoji;
+            document.getElementById("emoji1").textContent = game.emoji1;
             document.getElementById("guessesLeft").textContent = game.remainingGuesses;
 
 
