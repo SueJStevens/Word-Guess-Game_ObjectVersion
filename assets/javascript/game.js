@@ -3,6 +3,7 @@ var game = {
     name: 'wordGuessGame',
     categories: 'animals',
     words: ['terrapin','bear','dire wolf','china cat','bird song', 'carrion crow'],
+    initialComputerPick: '_ _ _ _ _ _ _ _ _ ',
     computerPick: '',
     wordBlank: '',
     guesses: '',
@@ -97,10 +98,13 @@ var game = {
             game.wrongGuesses= '';
             game.arrWrong = []; //empty array
             game.remainingGuesses = game.initialGuesses;
-            game.randomWord();
-            game.updateWordMask(game.computerPick, game.guesses);
-                
-    }
+            document.getElementById("wordBlanks").textContent = game.initialComputerPick;
+            game.randomWord();                
+    },
+
+    //changeDisplay: function(strElementID, displayValue) {
+      //  document.getElementById(strElementID).textContent = displayValue;
+   // }
 
 } //close object
 
@@ -122,11 +126,22 @@ document.onkeyup = function(event) {
             game.updateWordMask(game.computerPick, game.guesses);
             game.buildWrongGuesses(game.computerPick, game.guesses);
             game.calcRemainingGuesses();
-            console.log('computerPick: '+ game.computerPick);
+            //console.log('computerPick: '+ game.computerPick);
             //console.log('guesses: '+ game.guesses); //all guesses, right and wrong
             //console.log('wordBlank: '+ game.wordBlank);  //word mask showing right guesses
             //console.log('wrongGuesses: '+ game.wrongGuesses); //string of wrong guesses in alph order separated by a comma
             //console.log('remainingGuesses: '+ game.remainingGuesses); //Calc of remaining guesses
+
+//            game.changeDisplay("computerPick", game.computerPick);
+//            game.changeDisplay("wordBlank", game.wordBlank);
+//            game.changeDisplay("wrongGuesses", game.wrongGuesses);
+//            game.changeDisplay("guessesLeft", game.remainingGuesses);
+
+            document.getElementById("computerPick").textContent = game.computerPick;
+            document.getElementById("wordBlanks").textContent = game.wordBlank;
+            document.getElementById("wrongGuesses").textContent = game.wrongGuesses;
+            document.getElementById("guessesLeft").textContent = game.remainingGuesses;
+
 
        
             
@@ -137,11 +152,15 @@ document.onkeyup = function(event) {
     if (game.wordBlank.indexOf("_") < 0) {
          //game over - win
          game.wins = game.wins + 1;
-         console.log("Win!!!!! " +  game.wins);
+         //console.log("Win!!!!! " +  game.wins);
+//         game.changeDisplay("winCounter", game.wins);
+         document.getElementById("winCounter").textContent = game.wins;
          game.resetGame();
     } else if (game.remainingGuesses === 0) {
         game.losses = game.losses + 1;
-        console.log("Looser! " + game.losses);
+        //console.log("Looser! " + game.losses);
+//        game.changeDisplay("lossCounter", game.losses);
+        document.getElementById("lossCounter").textContent = game.losses;
         game.resetGame();
     } //end win/loss test
 
