@@ -2,11 +2,12 @@
 <html lang="en-us">
 
 <!--
-     ("`-''-/").___..--''"`-._
-     `6_ 6  )   `-.  (     ).`-.__.`)
-     (_Y_.)'  ._   )  `._ `. ``-..-'
-   _..`--'_..-_/  /--'_.' ,'  Draft #2 of Hangman - Object Version, with styling
-  (il),-''  (li),'  ((!.-'    Sue J. Stevens <StevensStock@gmail.com>
+ __,             ___     __,                        
+ (               ( /     (    _/_                    
+  `.  , , _       /       `.  /  _  _  ,__  _ _   (  
+(___)(_/_(/_    _/_  o  (___)(__(/_/ |/ (/_/ / /_/_)_
+               //                                    
+              (/                                     
 -->
 
 <head>
@@ -23,6 +24,11 @@
     <!--Custom local stylesheet for common shared elements like header and footer-->
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
 </head>
+
+<!--       _
+       .__(.)< (MEOW)
+        \___)   
+ ~~~~~~~~~~~~~~~~~~-->
 
 <body>
 
@@ -56,11 +62,12 @@
           <small class="yellow_tyedye">Type any letter to begin</small>
         </div>
       </div>
-
+  
+      <!-- Game counters all held here. cards are being used to hold various sections. -->
       <div class="row">
-        <div class="col-4">
-          <h3 class="invisible">Column 1</h3>
-          <!--Word to Guess (blanks and guessed word)-->
+        <div class="col-md-4 col-sm-6">
+  
+          <!-- Row1 cards: Holds the Word to Guess (blanks and guessed word) -->
           <div class="card">
             <div class="card-header">
               <h3 class="card-title"><strong>Word to Guess</strong></h3>
@@ -69,46 +76,11 @@
               <h3 id="wordBlanks">_ _ _ _ _ _ _ _ _ </h3>
             </div>
           </div>
-          <!--Wrong Guesses (list of user guesses not in the word-->
-          <div class="card">
-            <div class="card-body">
-              <strong>Wrong Guesses: </strong> <span id="wrongGuesses"></span>
-            </div>
           </div>
-          <!--Guesses Left (counter decreases with each wrong guess until zero-->
-          <div class="card">
-            <div class="card-body">
-              <strong>Guesses Left: </strong> <span id="guessesLeft">9</span>
-            </div>
-          </div>
-          <!--Wins (counter increases with each successful completion of word-->
-          <div class="card">
-            <div class="card-body">
-              <strong>Wins: </strong> <span id="winCounter">0</span>
-            </div>
-          </div>
-          <!--Losses (counter increases with each unsuccessful completion of word-->
-          <div class="card">
-            <div class="card-body">
-              <strong>Losses: </strong> <span id="lossCounter">0</span>
-            </div>
-          </div>
-          <!-- Hidden Card: Holds the value the computer picked (useful to the developer) -->
-          <div class="card d-none">
-            <div class="card-body">
-              <strong>Computer Pick: </strong> <span id="computerPick"></span>
-            </div>
-          </div>
-        </div> <!--end of left hand column-->
+  
+          <div class="col-md-4 col-sm-6">
 
-<!--       _
-       .__(.)< (MEOW)
-        \___)   
- ~~~~~~~~~~~~~~~~~~-->
-          
-        <div class="col-4">
-          <h3 class="invisible">Column 2</h3>
-          <!--Hangman Emoji-->
+          <!-- Row1 cards: Holds the Hangman Emoji -->
           <div class="card">
             <div class="card-header">
               <h3 class="card-title"><strong>Hangman Emoji</strong></h3>
@@ -117,17 +89,12 @@
               <h3 id="emoji"></h3>
               <h3 id="emoji1"></h3>
             </div>
-          </div>          
-        </div> <!--end of middle column-->
+          </div>
+        </div>
+  
+        <div class="col-md-4 col-sm-6">
 
-<!--       _
-       .__(.)< (MEOW)
-        \___)   
- ~~~~~~~~~~~~~~~~~~-->
-        
-        <div class="col-4">
-          <h3 class="invisible">Column 3</h3>
-          <!--Last Word Played and Trivia-->
+          <!-- Row 1 Cards: On Loss Displays the Last Word-->
           <div class="card">
             <div class="card-header">
               <h3 class="card-title"><strong>The Last Word Played</strong></h3>
@@ -136,32 +103,60 @@
               <h3 id="lastWord"></h3>
             </div>
           </div>
+        </div>
 
-          <!--Show Name of Song and start playing song-->
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          
+          <!-- Second card: Holds the list of Wrong User Guesses. -->
           <div class="card">
             <div class="card-body">
-              <strong><span id="songTitle">Song Title Displayed Here!</span></strong>
+              <strong>Wrong Guesses: </strong> <span id="wrongGuesses"></span>
+            </div>
+          </div>
+  
+          <!-- Third card: Holds the Number of Wrong Guesses -->
+          <div class="card">
+            <div class="card-body">
+  
+              <!-- This span called guessesLeft is where we will be dumping the number of guesses left.
+              Pay attention to the id called ****guessesLeft****. We'll be referencing this in the JavaScript. -->
+              <strong>Guesses Left: </strong> <span id="guessesLeft">9</span>
+            </div>
+          </div>
+  
+          <!-- Fourth card: Holds the number of Wins. -->
+          <div class="card">
+            <div class="card-body">
+  
+              <!-- This span called winCounter is where we'll be dumping the number of wins.
+              Pay attention to the id called ****winCounter***. We'll be referencing this in the JavaScript. -->
+              <strong>Wins: </strong> <span id="winCounter">0</span>
+            </div>
+          </div>
+  
+          <!-- Fifth card: Holds the number of Losses. -->
+          <div class="card">
+            <div class="card-body">
+  
+              <!-- This span called winCounter is where we'll be dumping the number of wins.
+              Pay attention to the id called ****winCounter***. We'll be referencing this in the JavaScript. -->
+              <strong>Losses: </strong> <span id="lossCounter">0</span>
             </div>
           </div>
 
-          <!--Show A Few Lines of Lyrics-->
-          <div class="card">
+          <!-- Hidden Card: Holds the value the computer picked. -->
+          <div class="card d-none">
             <div class="card-body">
-              <strong><span id="songLyrics">Lyrics</span></strong>
+              <strong>Computer Pick: </strong> <span id="computerPick"></span>
             </div>
-          </div>          
+          </div>
 
-        </div> <!--end of right hand column-->
-
-<!--       _
-       .__(.)< (MEOW)
-        \___)   
- ~~~~~~~~~~~~~~~~~~-->
-
-      </div> <!--Close Outer Div that makes up the three columns-->
-  
-
-    </div> <!--Close Bootstrap Container-->
+        </div>
+      </div>
+    </div>
   
 
     <!--footer will always be on bottom of content-->

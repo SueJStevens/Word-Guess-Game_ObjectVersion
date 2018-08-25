@@ -3,8 +3,6 @@ var game = {
     name: 'wordGuessGame',
     categories: 'animals',
     words: ['terrapin','bear','dire wolf','china cat','bird song', 'carrion crow'],
-    titles: ['Terrapin Station','Katie Mae','Dire Wolf','China Cat Sunflower','Bird Song', 'Mountains of the Moon'],
-    //Katie Mae is the 1st track on side 1 of the album History of the Grateful Dead, Volume One (Bear's Choice)
     initialComputerPick: '_ _ _ _ _ _ _ _ _ ',
     computerPick: '',
     wordBlank: '',
