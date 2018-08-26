@@ -4,7 +4,7 @@ var game = {
     categories: 'animals',
     words: ['terrapin','bear','dire wolf','china cat','bird song', 'carrion crow',"monkey"],
     titles: ['_ _ _ _ _ _ _ _ Station','Katie Mae','Dire Wolf','China Cat Sunflower','Bird Song', 'Mountains of the Moon', "Monkey and The Engineer"],
-    audio: [
+    audiotitles: [
         'assets/audio/gd977611d1_06_Terrapin_Station_Medley-__Part_1-_Lady_with_a_Fan_Terrapin_Station_Terrapin_Terrapin_Transit_At_A_Dising_Terrapin_Flyer__Refrain.mp3'
         ,'assets/audio/gd440060d1_01_Katie_Mae.mp3'
         ,'assets/audio/gd977505d1_01_Dire_Wolf.mp3'
@@ -13,6 +13,7 @@ var game = {
         ,'assets/audio/gd690426d1_02_Mountains_Of_The_Moon.mp3'
         ,'assets/audio/gd977505d1_28_Monkey_And_The_Engineer.mp3'
     ],
+    mp3titles: '',
     //Katie Mae is the 1st track on side 1 of the album History of the Grateful Dead, Volume One (Bear's Choice)
     initialComputerPick: '_ _ _ _ _ _ _ _ _ ',
     computerPick: '',
@@ -35,7 +36,9 @@ var game = {
         game.computerPick_i = Math.floor(Math.random() * game.words.length);
         game.computerPick = game.words[game.computerPick_i];
         game.titlePick = game.titles[game.computerPick_i];
-        game.audioPick = game.audio[game.computerPick_i];
+        game.mp3titles = game.audiotitles[game.computerPick_i];
+        //console.log(game.mp3titles);
+               
     },
 
     lettersGuessed: function(ltr) {
@@ -136,6 +139,12 @@ var game = {
         document.getElementById(elementID).textContent = elementVal;
     },
 
+    //Note:  Not using this yet -- it wont work!!!
+    audio: function(elementVal) {
+        //document.getElementById("audioPick").src = game.elementVal;
+
+    },
+
     resetGame: function() {
             document.getElementById("lastWord").textContent = game.computerPick;
             document.getElementById("guessesLeft").textContent = game.initialGuesses;
@@ -147,14 +156,23 @@ var game = {
             game.remainingGuesses = game.initialGuesses;
             document.getElementById("wrongGuesses").textContent = game.wrongGuesses;
             document.getElementById("wordBlanks").textContent = game.initialComputerPick;
-            game.randomWord();                
+            game.randomWord();    
+            document.getElementById("audioPick").src = game.mp3titles;            
     },
 
 } //close object
 
 //function for random computer choice
-game.computerPick = game.words[Math.floor(Math.random() * Math.floor(game.words.length))],
-game.randomWord();
+//game.computerPick = game.words[Math.floor(Math.random() * Math.floor(game.words.length))],
+//game.randomWord();
+
+window.onload = function(){
+    game.randomWord();
+    console.log(game.mp3titles);
+    document.getElementById("audioPick").src = game.mp3titles;
+}
+
+
 document.onkeyup = function(event) {
     //capture what the user typed and evluate it to elimate anything that isn't a valid letter
     var userChoice = event.key.toLowerCase();
@@ -170,12 +188,12 @@ document.onkeyup = function(event) {
             game.buildWrongGuesses(game.computerPick, game.guesses);
             game.calcRemainingGuesses();
             game.buildEmoji(game.remainingGuesses);
+            
 
             //Update the display (note: consider if this can be in a function)
 
             document.getElementById("computerPick").textContent = game.computerPick;
             document.getElementById("songTitle").textContent = game.titlePick;
-            document.getElementById("audioPick").src = game.audioPick;
             document.getElementById("wordBlanks").textContent = game.wordBlank;
             document.getElementById("wrongGuesses").textContent = game.wrongGuesses;
             document.getElementById("emoji").textContent = game.emoji;
