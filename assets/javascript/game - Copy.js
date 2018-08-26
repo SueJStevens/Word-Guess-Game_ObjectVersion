@@ -19,7 +19,9 @@ var game = {
     emoji1: "",
 
     randomWord: function() {
-        game.computerPick = game.words[Math.floor(Math.random() * Math.floor(game.words.length))];
+        //don't need to round this function again!
+        //game.computerPick = game.words[Math.floor(Math.random() * Math.floor(game.words.length))];
+        game.computerPick = game.words[Math.floor(Math.random() * game.words.length)];
     },
 
     lettersGuessed: function(ltr) {

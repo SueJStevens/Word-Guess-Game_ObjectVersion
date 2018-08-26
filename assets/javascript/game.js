@@ -2,11 +2,21 @@
 var game = {
     name: 'wordGuessGame',
     categories: 'animals',
-    words: ['terrapin','bear','dire wolf','china cat','bird song', 'carrion crow'],
-    titles: ['Terrapin Station','Katie Mae','Dire Wolf','China Cat Sunflower','Bird Song', 'Mountains of the Moon'],
+    words: ['terrapin','bear','dire wolf','china cat','bird song', 'carrion crow',"monkey"],
+    titles: ['_ _ _ _ _ _ _ _ Station','Katie Mae','Dire Wolf','China Cat Sunflower','Bird Song', 'Mountains of the Moon', "Monkey and The Engineer"],
+    audio: [
+        'assets/audio/gd977611d1_06_Terrapin_Station_Medley-__Part_1-_Lady_with_a_Fan_Terrapin_Station_Terrapin_Terrapin_Transit_At_A_Dising_Terrapin_Flyer__Refrain.mp3'
+        ,'assets/audio/gd440060d1_01_Katie_Mae.mp3'
+        ,'assets/audio/gd977505d1_01_Dire_Wolf.mp3'
+        ,'assets/audio/gd150705d1_01_China_Cat_Sunflower.mp3'
+        ,'assets/audio/gd977505d1_15_Bird_Song.mp3'
+        ,'assets/audio/gd690426d1_02_Mountains_Of_The_Moon.mp3'
+        ,'assets/audio/gd977505d1_28_Monkey_And_The_Engineer.mp3'
+    ],
     //Katie Mae is the 1st track on side 1 of the album History of the Grateful Dead, Volume One (Bear's Choice)
     initialComputerPick: '_ _ _ _ _ _ _ _ _ ',
     computerPick: '',
+    computerPick_i: '',
     wordBlank: '',
     guesses: '',
     rightGuesses: '',
@@ -21,7 +31,11 @@ var game = {
     emoji1: "",
 
     randomWord: function() {
-        game.computerPick = game.words[Math.floor(Math.random() * Math.floor(game.words.length))];
+        //get index of computer pick so the index can also be used elsewhere in game
+        game.computerPick_i = Math.floor(Math.random() * game.words.length);
+        game.computerPick = game.words[game.computerPick_i];
+        game.titlePick = game.titles[game.computerPick_i];
+        game.audioPick = game.audio[game.computerPick_i];
     },
 
     lettersGuessed: function(ltr) {
@@ -117,12 +131,15 @@ var game = {
         document.getElementById("emoji1").textContent = game.emoji1;
     },
 
+    //Note:  Not using this yet -- considering how to use as a function efficiently rather than just swapping one line of code for a different line of code elsewhere
+    changeDisplay: function(elementId, elementVal){
+        document.getElementById(elementID).textContent = elementVal;
+    },
+
     resetGame: function() {
-        /*NOTE DON'T FORGET TO RESET THE DISPLAY TOO!!*/
             document.getElementById("lastWord").textContent = game.computerPick;
             document.getElementById("guessesLeft").textContent = game.initialGuesses;
-
-        //reset variables
+            
             game.guesses =  '';
             game.rightGuesses =  '';
             game.wrongGuesses= '';
@@ -149,13 +166,16 @@ document.onkeyup = function(event) {
             && game.guesses.indexOf(userChoice) < 0) {
 
             game.lettersGuessed(userChoice);
-
             game.updateWordMask(game.computerPick, game.guesses);
             game.buildWrongGuesses(game.computerPick, game.guesses);
             game.calcRemainingGuesses();
             game.buildEmoji(game.remainingGuesses);
 
+            //Update the display (note: consider if this can be in a function)
+
             document.getElementById("computerPick").textContent = game.computerPick;
+            document.getElementById("songTitle").textContent = game.titlePick;
+            document.getElementById("audioPick").src = game.audioPick;
             document.getElementById("wordBlanks").textContent = game.wordBlank;
             document.getElementById("wrongGuesses").textContent = game.wrongGuesses;
             document.getElementById("emoji").textContent = game.emoji;
@@ -163,26 +183,22 @@ document.onkeyup = function(event) {
             document.getElementById("guessesLeft").textContent = game.remainingGuesses;
 
 
-       
-            
-    }//close ingore bad typing
+        //is the game over?
+        //test to see if win;  a win has no more underscores in the mask.
+        if (game.wordBlank.indexOf("_") < 0) {
+            //game over - win
+            game.wins = game.wins + 1;
+    //      game.changeDisplay("winCounter", game.wins);
+            document.getElementById("winCounter").textContent = game.wins;
+            game.resetGame();
+        } else if (game.remainingGuesses === 0) {
+            game.losses = game.losses + 1;
+    //        game.changeDisplay("lossCounter", game.losses);
+            document.getElementById("lossCounter").textContent = game.losses;
+            game.resetGame();
+        } //end win/loss test
 
-    //is the game over?
-    //test to see if win;  a win has no more underscores in the mask.
-    if (game.wordBlank.indexOf("_") < 0) {
-         //game over - win
-         game.wins = game.wins + 1;
-         //console.log("Win!!!!! " +  game.wins);
-//         game.changeDisplay("winCounter", game.wins);
-         document.getElementById("winCounter").textContent = game.wins;
-         game.resetGame();
-    } else if (game.remainingGuesses === 0) {
-        game.losses = game.losses + 1;
-        //console.log("Looser! " + game.losses);
-//        game.changeDisplay("lossCounter", game.losses);
-        document.getElementById("lossCounter").textContent = game.losses;
-        game.resetGame();
-    } //end win/loss test
+    }//close ingore bad typing
 
 }
 
