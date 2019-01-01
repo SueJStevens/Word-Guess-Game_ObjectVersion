@@ -1,5 +1,5 @@
 # Word-Guess-Game_ObjectVersion
-A new iteration of Word-Guess-Game with JS as an Object
+A new iteration of Word-Guess-Game with JS as an Object     
 Bootcamp Assignment 8/18/2018 - Word Guess Game
 
 ## Demo
